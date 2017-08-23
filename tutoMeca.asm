@@ -26,7 +26,7 @@ section .data
         thumb db "thumb finger" , 10
         thumb_size equ $ - thumb
         left_limit equ line_size + line_size + 2
-        down_limit equ line_size * 8
+        down_limit equ line_size * 7
 
         
 
@@ -88,7 +88,7 @@ loop:
         mov si,0
         mov si, [time]
         mov di,0
-        mov di, 2000
+        mov di, 1000
         push si
         push di
 
@@ -246,6 +246,9 @@ printscore:
         mov ebx, score_msg
         mov esi, score_msg_size
         CALL PrintString        ;Call print string procedure
+
+        mov al, 0x20
+        call PrintCharacter
 
         mov ax,0
         mov ax, word[score]
