@@ -27,7 +27,6 @@ section .data
         thumb_size equ $ - thumb
         left_limit equ line_size + line_size + 2
         down_limit equ line_size * 8
-        big_time equ 99905
 
         
 
@@ -89,7 +88,7 @@ loop:
         mov si,0
         mov si, [time]
         mov di,0
-        mov di, big_time
+        mov di, 9991
         push si
         push di
 
