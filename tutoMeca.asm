@@ -33,7 +33,7 @@ section .data
 section .bss
         
         ij resb 2
-        score resb 4
+        score resb 2
         buffer resb 2
         buffer_size equ $ - buffer
         letter resb 1
@@ -52,17 +52,17 @@ main:
 
 addpoint:
         mov byte[falling], 0
-        mov eax, dword[score]
-        add eax,1
-        mov dword[score],eax
+        mov ax, word[score]
+        add ax,1
+        mov word[score],ax
         jmp restartletter
 subpoint:
         mov byte[falling], 0
-        mov eax, dword[score]
-        cmp eax,0
+        mov ax, word[score]
+        cmp ax,0
         je restartletter
-        sub eax,1
-        mov dword[score],eax
+        sub ax,1
+        mov word[score],ax
         jmp restartletter
 
 restartletter:
@@ -247,10 +247,11 @@ printscore:
         mov esi, score_msg_size
         CALL PrintString        ;Call print string procedure
 
-        mov al, byte[score]
-        push al
-        mov al,1
-        push al
+        mov ax,0
+        mov ax, word[score]
+        push ax
+        mov ax,1
+        push ax
         call print_hex_word
         pop al
         pop al
