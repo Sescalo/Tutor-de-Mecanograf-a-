@@ -25,6 +25,7 @@ section .data
         index_size equ $ - index
         thumb db "thumb finger" , 10
         thumb_size equ $ - thumb
+        left_limit equ line_size + line_size + 1
 
         
 
@@ -86,7 +87,7 @@ loop:
         mov si,0
         mov si, [time]
         mov di,0
-        mov di, 9999
+        mov di, 999
         push si
         push di
 
@@ -131,7 +132,7 @@ moveletterleft:
         mov cl, 0x20 
         mov byte[mat + si], cl ;escribo espacio en posicion anterior
         sub si,1   
-        mov bx,line_size + 1
+        mov bx,left_limit
         cmp si, bx
         jle subpoint   
         mov [ij],si 
