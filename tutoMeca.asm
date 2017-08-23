@@ -158,7 +158,8 @@ moveletterdown:
         jmp subpoint             ; pegue con un punto
 
         mov word[ij],si
-        mov byte[mat + si], byte[letter] ;escribo letra en posicion nueva
+        mov al,  byte[letter]
+        mov byte[mat + si], al;escribo letra en posicion nueva
         jmp paintmat
 
 
@@ -246,10 +247,10 @@ printscore:
         mov esi, score_msg_size
         CALL PrintString        ;Call print string procedure
 
-        mov al, byte[Score]
+        mov al, byte[score]
         push al
-        mov al,0
-        push, 1
+        mov al,1
+        push al
         call print_hex_word
         pop al
         pop al
