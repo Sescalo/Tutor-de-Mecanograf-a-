@@ -69,7 +69,7 @@ restartletter:
         mov AH, 00h
         INT 1Ah
         
-        mov al,dh
+        mov al,dl
         mov bl,26
         div bl
         add ah, 97
@@ -88,7 +88,7 @@ loop:
         mov si,0
         mov si, [time]
         mov di,0
-        mov di, 8000
+        mov di, 2000
         push si
         push di
 
@@ -148,7 +148,7 @@ moveletterdown:
         mov al, byte[mat + si]
         mov cl, 0x20 
         mov byte[mat + si], cl ;escribo espacio en posicion anterior
-        add si,line_size - 1
+        add si,line_size + 1
 
         mov bx, down_limit
         cmp si,bx             ; sali de la matriz
