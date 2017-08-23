@@ -249,7 +249,7 @@ printscore:
         mov al, byte[Score]
         push al
         mov al,0
-        push, 0
+        push, 1
         call print_hex_word
         pop al
         pop al
