@@ -34,6 +34,7 @@ section .bss
         
         ij resb 2
         score resb 2
+        Score resb 2
         buffer resb 2
         buffer_size equ $ - buffer
         letter resb 1
@@ -46,7 +47,8 @@ main:
         mov byte[letter],120
         mov word[ij], initial_pos
         mov esi, 0
-        mov word[score],0
+        mov word[score],100
+        mov word[Score],0
         mov byte[falling], 0
         mov dword[time],99999999
 
@@ -85,6 +87,11 @@ paintletter:
         mov byte[mat + ebx], cl        ; write into memory ; + i * line_size + j
 
 loop: 
+
+        mov ax, word[Score]
+        add ax,1
+        mov word[Score],ax
+
         mov si,0
         mov si, [time]
         mov di,0
@@ -252,8 +259,6 @@ printscore:
 
         
         call print_score
-        pop ax
-        pop ax
 
         pop di
         pop si
@@ -342,7 +347,7 @@ print_score:
     mov bp, sp      ; BP=SP, on 8086 can't use sp in memory operand
     mov cx, 0x0404  ; CH = number of nibbles to process = 4 (4*4=16 bits)
                     ; CL = Number of bits to rotate each iteration = 4 (a nibble)
-    mov dx, word[score] ; DX = word parameter on stack at [bp+18] to print
+    mov dx, word[Score] ; DX = word parameter on stack at [bp+18] to print
     mov bx, 1 ; BX = page / foreground attr is at [bp+20]
 
 .loop:
