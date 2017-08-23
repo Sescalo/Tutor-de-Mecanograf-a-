@@ -258,7 +258,7 @@ endloop:
         cmp si,0
         jne endloop
         sub di,1
-        mov si, [time]
+        mov si, small_time
         cmp di,0
         je loop
         jmp endloop
