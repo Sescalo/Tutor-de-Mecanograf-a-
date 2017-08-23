@@ -26,9 +26,8 @@ section .data
         thumb db "thumb finger" , 10
         thumb_size equ $ - thumb
         left_limit equ line_size + line_size + 2
-        small_time equ 99999999
-        big_time equ 999
         down_limit equ line_size * 8
+        big_time equ 9995
 
         
 
@@ -40,7 +39,7 @@ section .bss
         buffer_size equ $ - buffer
         letter resb 1
         falling resb 1
-        
+        time resb 4
 
 section .text
 global main
@@ -50,6 +49,7 @@ main:
         mov esi, 0
         mov word[score],0
         mov byte[falling], 0
+        mov dword[time],99999999
 
 addpoint:
         mov byte[falling], 0
@@ -87,7 +87,7 @@ paintletter:
 
 loop: 
         mov si,0
-        mov si, small_time
+        mov si, [time]
         mov di,0
         mov di, big_time
         push si
@@ -161,7 +161,6 @@ moveletterdown:
         mov word[ij],si
         mov byte[mat + si], al ;escribo letra en posicion nueva
         jmp paintmat
-
 
 
 paintmat:
@@ -258,7 +257,7 @@ endloop:
         cmp si,0
         jne endloop
         sub di,1
-        mov si, small_time
+        mov si, [time]
         cmp di,0
         je loop
         jmp endloop
