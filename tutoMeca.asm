@@ -250,11 +250,12 @@ printscore:
         mov al, 0x20
         call PrintCharacter
 
+        mov ax,1
+        push ax
         mov ax,0
         mov ax, word[score]
         push ax
-        mov ax,1
-        push ax
+        
         call print_hex_word
         pop ax
         pop ax
