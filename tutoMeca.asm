@@ -77,10 +77,10 @@ loop:
         push si
         push di
 
-        ;mov al, [falling]
+        mov al, [falling]
         cmp al, 1
         ;je moveletterdown
-        ;mov byte[falling], 0
+        mov byte[falling], 0
 
         mov ah, 02h
         mov bh, 0x00
@@ -153,9 +153,22 @@ printhand:
         sub cl,97
         add ecx, hand
         mov al, byte[ecx]
-        call PrintCharacter
-        mov al,20h
-        call PrintCharacter
+        cmp al,114
+        je printright
+        jmp printleft
+
+printright:
+        mov ebx,right
+        mov esi, right_size
+        CALL PrintString        ;Call print string procedure
+        jmp printfinger
+
+printleft:
+        mov ebx,left
+        mov esi, left_size
+        CALL PrintString        ;Call print string procedure
+        jmp printfinger
+        
 
 printfinger:
         mov ecx,0
@@ -163,9 +176,39 @@ printfinger:
         sub cl,97
         add ecx, finger
         mov al, byte[ecx]
-        call PrintCharacter
-        mov al,10
-        call PrintCharacter
+        cmp al, 112
+        je printpinky   
+        cmp al, 114
+        je printring
+        cmp al, 109
+        je printmiddle
+        cmp al, 105
+        je printindex
+
+printpinky:
+        mov ebx,pinky
+        mov esi, pinky_size
+        CALL PrintString        ;Call print string procedure
+        jmp printscore
+
+printring:
+        mov ebx,ring
+        mov esi, ring_size
+        CALL PrintString        ;Call print string procedure
+        jmp printscore
+
+printmiddle:
+        mov ebx,middle
+        mov esi, middle_size
+        CALL PrintString        ;Call print string procedure
+        jmp printscore
+
+printindex:
+        mov ebx,index
+        mov esi, index_size
+        CALL PrintString        ;Call print string procedure
+        jmp printscore
+
 
 printscore:
         mov ebx, score_msg
@@ -196,7 +239,7 @@ endloop:
 
 
 
-
+;------------------------------------------------------------------------------
 
 PrintCharacter: ;Procedure to print character on screen
         ;Assume that ASCII value is in register AL
@@ -206,16 +249,14 @@ PrintCharacter: ;Procedure to print character on screen
 
         INT 0x10        ;Call video interrupt
 
-        CMP AL, 10
-
+        CMP AL, 10      ;Enter, realloc the mouse pointer
         JNE continue
 
-        mov ah, 03h
+        mov ah, 03h     ;Get Mouse info
         mov bh, 0x00
-
         int 10h
 
-        mov ah, 02h
+        mov ah, 02h     ;Set mouse pointer position
         mov bh, 0x00
         mov dl, 0x00
 
