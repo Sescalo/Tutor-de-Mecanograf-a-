@@ -250,13 +250,8 @@ printscore:
         mov al, 0x20
         call PrintCharacter
 
-        mov ax,1
-        push ax
-        mov ax,0
-        mov ax, word[score]
-        push ax
         
-        call print_hex_word
+        call print_score
         pop ax
         pop ax
 
@@ -342,13 +337,13 @@ clearScreen:
     ;popa
     ret
 ;------------------------------------------------------------------------------
-print_hex_word:
+print_score:
     pusha           ; Save all registers, 16 bytes total
     mov bp, sp      ; BP=SP, on 8086 can't use sp in memory operand
     mov cx, 0x0404  ; CH = number of nibbles to process = 4 (4*4=16 bits)
                     ; CL = Number of bits to rotate each iteration = 4 (a nibble)
-    mov dx, [bp+18] ; DX = word parameter on stack at [bp+18] to print
-    mov bx, [bp+20] ; BX = page / foreground attr is at [bp+20]
+    mov dx, word[score] ; DX = word parameter on stack at [bp+18] to print
+    mov bx, 1 ; BX = page / foreground attr is at [bp+20]
 
 .loop:
     rol dx, cl      ; Roll 4 bits left. Lower nibble is value to print
