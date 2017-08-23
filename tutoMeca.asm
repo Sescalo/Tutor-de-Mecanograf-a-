@@ -25,7 +25,10 @@ section .data
         index_size equ $ - index
         thumb db "thumb finger" , 10
         thumb_size equ $ - thumb
-        left_limit equ line_size + line_size + 1
+        left_limit equ line_size + line_size + 2
+        small_time equ 99999999
+        big_time equ 9995
+        down_limit equ line_size * 8
 
         
 
@@ -35,8 +38,6 @@ section .bss
         score resb 4
         buffer resb 2
         buffer_size equ $ - buffer
-        time resb 4
-        time_size equ $ - time
         letter resb 1
         falling resb 1
         
@@ -45,7 +46,6 @@ section .text
 global main
 main:
         mov byte[letter],120
-        mov dword[time],99999999 ;max size
         mov word[ij], initial_pos
         mov esi, 0
         mov word[score],0
@@ -60,6 +60,8 @@ addpoint:
 subpoint:
         mov byte[falling], 0
         mov eax, dword[score]
+        cmp eax,0
+        je restartletter
         sub eax,1
         mov dword[score],eax
         jmp restartletter
@@ -85,9 +87,9 @@ paintletter:
 
 loop: 
         mov si,0
-        mov si, [time]
+        mov si, small_time
         mov di,0
-        mov di, 999
+        mov di, big_time
         push si
         push di
 
@@ -142,14 +144,24 @@ moveletterleft:
 
 
 moveletterdown:
+        mov byte[falling], 1
         mov si, word[ij]  
         mov al, byte[mat + si]
         mov cl, 0x20 
         mov byte[mat + si], cl ;escribo espacio en posicion anterior
         add si,line_size
+
+        mov bx, down_limit
+        cmp si,bx             ; sali de la matriz
+        jge addpoint
+        mov al,byte[mat + si]
+        cmp al,0x20
+        jne subpoint             ; pegue con un punto
+
         mov word[ij],si
         mov byte[mat + si], al ;escribo letra en posicion nueva
         jmp paintmat
+
 
 
 paintmat:
