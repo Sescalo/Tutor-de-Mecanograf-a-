@@ -88,7 +88,7 @@ loop:
         mov si,0
         mov si, [time]
         mov di,0
-        mov di, 9991
+        mov di, 8000
         push si
         push di
 
@@ -148,7 +148,7 @@ moveletterdown:
         mov al, byte[mat + si]
         mov cl, 0x20 
         mov byte[mat + si], cl ;escribo espacio en posicion anterior
-        add si,line_size
+        add si,line_size - 1
 
         mov bx, down_limit
         cmp si,bx             ; sali de la matriz
