@@ -54,9 +54,9 @@ main:
 
 addpoint:
         mov byte[falling], 0
-        mov ax, word[score]
+        mov ax, word[Score]
         add ax,1
-        mov word[score],ax
+        mov word[Score],ax
         jmp restartletter
 subpoint:
         mov byte[falling], 0
