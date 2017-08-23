@@ -50,6 +50,19 @@ main:
         mov word[score],0
         mov byte[falling], 0
 
+addpoint:
+        mov byte[falling], 0
+        mov eax, dword[score]
+        add eax,1
+        mov dword[score],eax
+        jmp restartletter
+subpoint:
+        mov byte[falling], 0
+        mov eax, dword[score]
+        sub eax,1
+        mov dword[score],eax
+        jmp restartletter
+
 restartletter:
         mov AH, 00h
         INT 1Ah
@@ -79,7 +92,7 @@ loop:
 
         mov al, [falling]
         cmp al, 1
-        ;je moveletterdown
+        je moveletterdown
         mov byte[falling], 0
 
         mov ah, 02h
@@ -118,6 +131,9 @@ moveletterleft:
         mov cl, 0x20 
         mov byte[mat + si], cl ;escribo espacio en posicion anterior
         sub si,1   
+        mov bx,line_size + 1
+        cmp si, bx
+        jle subpoint   
         mov [ij],si 
         mov al,[letter]
         mov [mat + si], al ;escribo letra en posicion nueva
