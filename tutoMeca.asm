@@ -27,7 +27,7 @@ section .data
         thumb_size equ $ - thumb
         left_limit equ line_size + line_size + 2
         down_limit equ line_size * 8
-        big_time equ 9995
+        big_time equ 9992
 
         
 
@@ -155,7 +155,7 @@ moveletterdown:
         cmp si,bx             ; sali de la matriz
         jge addpoint
         mov al,byte[mat + si]
-        cmp al,0x20
+        cmp al,32
         jne subpoint             ; pegue con un punto
 
         mov word[ij],si
