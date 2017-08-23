@@ -171,6 +171,8 @@ printleft:
         
 
 printfinger:
+        mov al, 0x20
+        call PrintCharacter
         mov ecx,0
         mov cl,byte[letter]
         sub cl,97
@@ -211,6 +213,8 @@ printindex:
 
 
 printscore:
+        mov al, 10
+        call PrintCharacter
         mov ebx, score_msg
         mov esi, score_msg_size
         CALL PrintString        ;Call print string procedure
