@@ -27,7 +27,7 @@ section .data
         thumb_size equ $ - thumb
         left_limit equ line_size + line_size + 2
         small_time equ 99999999
-        big_time equ 9999
+        big_time equ 999
         down_limit equ line_size * 8
 
         
