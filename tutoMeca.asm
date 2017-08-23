@@ -47,7 +47,6 @@ main:
         mov byte[letter],120
         mov word[ij], initial_pos
         mov esi, 0
-        mov word[score],100
         mov word[Score],0
         mov byte[falling], 0
         mov dword[time],99999999
@@ -60,11 +59,11 @@ addpoint:
         jmp restartletter
 subpoint:
         mov byte[falling], 0
-        mov ax, word[score]
+        mov ax, word[Score]
         cmp ax,0
         je restartletter
         sub ax,1
-        mov word[score],ax
+        mov word[Score],ax
         jmp restartletter
 
 restartletter:
@@ -87,10 +86,6 @@ paintletter:
         mov byte[mat + ebx], cl        ; write into memory ; + i * line_size + j
 
 loop: 
-
-        mov ax, word[Score]
-        add ax,1
-        mov word[Score],ax
 
         mov si,0
         mov si, [time]
