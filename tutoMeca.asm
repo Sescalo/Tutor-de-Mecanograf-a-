@@ -39,7 +39,8 @@ section .bss
         buffer_size equ $ - buffer
         letter resb 1
         falling resb 1
-        time resb 4
+        bigtime resb 2
+        smalltime resb 2
 
 section .text
 global main
@@ -49,8 +50,8 @@ main:
         mov esi, 0
         mov word[Score],0
         mov byte[falling], 0
-        mov word[smalltime],99999
-        mov word[bigtime],1000
+        mov word[smalltime],9999
+        mov word[bigtime],5000
 
 addpoint:
         mov byte[falling], 0
@@ -126,10 +127,23 @@ comparekey:
         mov cl, byte[bx + si]
         cmp cl,al
         je moveletterdown
+        cmp cl,49
+        je level1
+        cmp cl,50
+        je level2
+        cmp cl,51
+        je level3
         jmp moveletterleft
 
-changelevel:
-
+level1:
+        mov word[bigtime],9999
+        jmp moveletterleft
+level2:
+        mov word[bigtime],7000
+        jmp moveletterleft
+level3:
+        mov word[bigtime],5000
+        jmp moveletterleft
 
 
 
@@ -270,7 +284,7 @@ endloop:
         cmp si,0
         jne endloop
         sub di,1
-        mov si, [time]
+        mov si, [bigtime]
         cmp di,0
         je loop
         jmp endloop
