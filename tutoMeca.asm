@@ -156,7 +156,7 @@ moveletterdown:
         jge addpoint
         mov al,byte[mat + si]
         cmp al,0x20
-        jne subpoint             ; pegue con un punto
+        jmp subpoint             ; pegue con un punto
 
         mov word[ij],si
         mov byte[mat + si], byte[letter] ;escribo letra en posicion nueva
