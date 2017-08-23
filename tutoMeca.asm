@@ -8,7 +8,7 @@ section .data
         mat db "___________________________________________________________________________",10,"|                                                                       __|",10,"|                                                                      ]__ ",10,"|    __     __     __     __     __     __     __     __     __     __    |",10,"|   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |",10,"|   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |",10,"|   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |",10,"|   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |  |   |",10,"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",10,10
         mat_size equ $ - mat
         line_size equ 75
-        initial_pos equ 225 - 5
+        initial_pos equ 225 - 4
         score_msg db "Score = "
         score_msg_size equ $ - score_msg
         right db "Right hand with "
@@ -155,7 +155,7 @@ moveletterdown:
         jge addpoint
         mov al,byte[mat + si]
         cmp al,0x20
-        jmp subpoint             ; pegue con un punto
+        jne subpoint             ; pegue con un punto
 
         mov word[ij],si
         mov al,  byte[letter]
