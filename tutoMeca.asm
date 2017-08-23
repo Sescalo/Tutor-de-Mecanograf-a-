@@ -253,8 +253,8 @@ printscore:
         mov ax,1
         push ax
         call print_hex_word
-        pop al
-        pop al
+        pop ax
+        pop ax
 
         pop di
         pop si
