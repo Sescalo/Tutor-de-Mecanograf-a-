@@ -49,7 +49,8 @@ main:
         mov esi, 0
         mov word[Score],0
         mov byte[falling], 0
-        mov dword[time],99999999
+        mov word[smalltime],99999
+        mov word[bigtime],1000
 
 addpoint:
         mov byte[falling], 0
@@ -88,9 +89,9 @@ paintletter:
 loop: 
 
         mov si,0
-        mov si, [time]
+        mov si, [smalltime]
         mov di,0
-        mov di, 1000
+        mov di, [bigtime]
         push si
         push di
 
@@ -126,6 +127,10 @@ comparekey:
         cmp cl,al
         je moveletterdown
         jmp moveletterleft
+
+changelevel:
+
+
 
 
 moveletterleft:
